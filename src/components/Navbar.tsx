@@ -13,6 +13,8 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 
 import { Link } from "react-router-dom";
+import Grid from "@material-ui/core/Grid";
+import Avatar from "@material-ui/core/Avatar";
 
 const useStyles = makeStyles((theme) => ({
   root: { flexGrow: 1 },
@@ -20,9 +22,14 @@ const useStyles = makeStyles((theme) => ({
   menuButton: { marginRight: theme.spacing(2) },
 
   title: { flexGrow: 1 },
+  user: {
+    marginRight: theme.spacing(2),
+  },
 
   navlink: { color: "white", textDecoration: "none" },
 }));
+
+const message = "Phuwadon Decharam";
 
 function Navbar() {
   const classes = useStyles();
@@ -45,9 +52,25 @@ function Navbar() {
               ระบบจัดการคนไข้นอก
             </Typography>
           </Link>
+
+          
+          
+            <div  >
+              <Grid container wrap="nowrap"  spacing={1}>
+                <Grid item>
+                  <Avatar>P</Avatar>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography noWrap>{message}</Typography>
+                </Grid>
+              </Grid>
+            </div>
+          
+
+
         </Toolbar>
       </AppBar>
     </div>
   );
-
-}export default Navbar;
+}
+export default Navbar;
