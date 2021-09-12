@@ -88,32 +88,6 @@ function CreateData() {
 
   function submit() {
     setSuccess(true); /**Tty Button SUMMIT */
-    /**let data = {
-      PATIENT_ID_CARD: user.PATIENT_ID_CARD ?? "",
-      PATIENT_FIRSTNAME: user.PATIENT_FIRSTNAME ?? "",
-      PATIENT_LASTNAME: user.PATIENT_LASTNAME ?? "",
-      PATIENT_WIEGHT: typeof user.PATIENT_WIEGHT =="string" ? parseInt(user.PATIENT_WIEGHT):0,
-      PATIENT_HEIGHT: typeof user.PATIENT_HEIGHT =="string" ? parseInt(user.PATIENT_HEIGHT):0,
-      PATIENT_GENDER: typeof user.PATIENT_GENDER =="string" ? parseInt(user.PATIENT_GENDER):0,
-      PATIENT_BIRTHDATE: selectedDate,
-      ALLERGY: user.ALLERGY ?? "",
-      UNDERLYING_DISEASE: user.UNDERLYING_DISEASE ?? "",
-    };
-    const apiUrl = "#";
-    const requestOptions = {
-      method: "POST",
-      headers: {"Conten-Type":"application/json"},
-      body: JSON.stringify(data),
-    };
-    fetch(apiUrl, requestOptions)
-    .then((response)=> response.json())
-    .then((res) => {
-      if (res.data){
-        setSuccess(true);
-      }else{
-        setError(true);
-      }
-    });*/
   }
   return (
     <Container className={classes.container} maxWidth="md">

@@ -1,15 +1,25 @@
 export interface UsersInterface {
 
-    ID: string,
+    PATIENT_ID: number,
 
-    FirstName: string;
+    PATIENT_ID_CARD: number,
 
-    LastName: string;
+    PATIENT_FIRSTNAME: string;
 
-    Email: string;
+    PATIENT_LASTNAME: string;
 
-    Gender: any;
+    PATIENT_WIEGHT: number;
 
-    BirthDay: Date | null;
+    PATIENT_HEIGHT: number;
+
+    PATIENT_GENDER: number;
+
+    PATIENT_BIRTHDATE: Date | null;
+
+    ALLERGY: string;
+
+    UNDERLYING_DISEASE: string;
+
+    MEDICAL_RECORD_AUDIT: number;
 
 }
