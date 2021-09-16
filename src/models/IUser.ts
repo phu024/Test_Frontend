@@ -8,10 +8,6 @@ export interface UsersInterface {
 
     PATIENT_LASTNAME: string;
 
-    PATIENT_WIEGHT: number;
-
-    PATIENT_HEIGHT: number;
-
     PATIENT_GENDER: number;
 
     PATIENT_BIRTHDATE: Date | null;

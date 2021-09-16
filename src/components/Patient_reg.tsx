@@ -22,6 +22,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import "date-fns";
 import SaveIcon from "@material-ui/icons/Save";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -47,10 +48,13 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
+const ALLERGY = [{ title: "ไม่มี" },{ title: "Paracetamol"},{ title: "Ibuprofen"},{ title: "Orphenadrine"}];
+const UNDERLYING_DISEASE = [{ title: "ไม่มี" }, { title: "โรคหลอดเลือดหัวใจ" }, { title: "โรคเบาหวาน" }, { title: "โรคความดันโลหิตสูง" }];
 
 function CreateData() {
   const classes = useStyles();
   const [gender, setGender] = React.useState("");
+
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setGender(event.target.value as string);
   };
@@ -65,9 +69,11 @@ function CreateData() {
     setSelectedDate(date);
   };
 
+  /**CustomizedDatetime */
   const [user, setUser] = React.useState<Partial<UsersInterface>>({});
   const [success, setSuccess] = React.useState(false);
   const [error, setError] = React.useState(false);
+
 
   /**CustomizedSnackbars*/
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
@@ -173,33 +179,13 @@ function CreateData() {
                 fullWidth
               />
             </Grid>
-            <Grid item xs={12} sm={2}>
-              <TextField
-                required
-                id="PATIENT_WIEGHT"
-                label="น้ำหนัก"
-                fullWidth
-                type="Number"
-                InputProps={{ inputProps: { min: 1 } }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={2}>
-              <TextField
-                required
-                id="PATIENT_HEIGHT"
-                label="ส่วนสูง"
-                fullWidth
-                type="Number"
-                InputProps={{ inputProps: { min: 1 } }}
-              />
-            </Grid>
             <Grid item xs={12} sm={2} spacing={0}>
-              <FormControl className={classes.formControl}>
+              <FormControl className={classes.formControl} variant="outlined">
                 <InputLabel id="gender">เพศ</InputLabel>
-                <Select
-                  id="PATIENT_GENDER"
-                  value={gender}
-                  onChange={handleChange}
+                <Select 
+                onChange={handleChange}
+                label="gender"
+                value={gender}
                 >
                   <MenuItem value={1}>ชาย</MenuItem>
                   <MenuItem value={2}>หญิง</MenuItem>
@@ -220,24 +206,27 @@ function CreateData() {
                 />
               </MuiPickersUtilsProvider>
             </Grid>
+
             <Grid item xs={12}>
-              <TextField
+              <p>ประวัติการแพ้ยา</p>
+              <Autocomplete
                 id="ALLERGY"
-                label="ประวัติการแพ้ยา"
-                fullWidth
-                multiline
-                rows={4}
-                type="String"
+                options={ALLERGY}
+                getOptionLabel={(option) => option.title}
+                renderInput={(params) => (
+                  <TextField {...params} label="" variant="outlined" />
+                )}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <p>โรคประจำตัว</p>
+              <Autocomplete
                 id="UNDERLYING_DISEASE"
-                label="โรคประจำตัว"
-                fullWidth
-                multiline
-                rows={4}
-                type="String"
+                options={UNDERLYING_DISEASE}
+                getOptionLabel={(option) => option.title}
+                renderInput={(params) => (
+                  <TextField {...params} label="" variant="outlined" />
+                )}
               />
             </Grid>
           </Grid>
