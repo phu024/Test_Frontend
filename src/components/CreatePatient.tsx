@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import React from "react";
 import { useEffect, useState } from "react";
-//import { Link as RouterLink } from "react-router-dom";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -31,25 +30,19 @@ import { PatientInterface } from "../models/IPatient";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: { flexGrow: 1 },
-    container: { marginTop: theme.spacing(5) },
-
-    paper: { padding: theme.spacing(5), color: theme.palette.text.secondary },
-    formControl: {
-      margin: theme.spacing(0),
-      minWidth: 120,
+    root: {
+      flexGrow: 1,
     },
-    selectEmpty: {
+    container: {
       marginTop: theme.spacing(2),
     },
-    textField: {
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-      width: 200,
+    paper: {
+      padding: theme.spacing(2),
+      color: theme.palette.text.secondary,
     },
-    button: {
-      marginTop: theme.spacing(5),
-      margin: theme.spacing(0),
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
     },
   })
 );
@@ -61,11 +54,11 @@ const Alert = (props: AlertProps) => {
 function CreatePatient() {
   const classes = useStyles();
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-  const [gender, setGenders] = useState<GenderInterface[]>([]);
-  const [underlying_disease, setUnderlying_diseases] = useState<Underlying_diseaseInterface[]>([]);
-  const [allergy, setAllergys] = useState<AllergyInterface[]>([]);
-  const [recorder, setRecorders] = useState<RecorderInterface[]>([]);
-  const [patient, setPatient] = useState<Partial<PatientInterface>>({});
+  const [genders, setGenders] = useState<GenderInterface[]>([]);
+  const [underlying_diseases, setUnderlying_diseases] = useState<Underlying_diseaseInterface[]>([]);
+  const [allergys, setAllergys] = useState<AllergyInterface[]>([]);
+  const [recorders, setRecorders] = useState<RecorderInterface[]>([]);
+  const [patients, setPatient] = useState<Partial<PatientInterface>>({});
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
@@ -86,9 +79,9 @@ function CreatePatient() {
   const handleChange = (
     event: React.ChangeEvent<{ name?: string; value: unknown }>
   ) => {
-    const name = event.target.name as keyof typeof patient;
+    const name = event.target.name as keyof typeof patients;
     setPatient({
-      ...patient,
+      ...patients,
       [name]: event.target.value,
     });
   };
@@ -98,7 +91,7 @@ function CreatePatient() {
     setSelectedDate(date);
   };
 
-  const getGender = async () => {
+  const getGender = async() => {
     fetch(`${apiUrl}/genders`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
@@ -109,7 +102,7 @@ function CreatePatient() {
         }
       });
   };
-  const getDisease = async () => {
+  const getDisease = async() => {
     fetch(`${apiUrl}/underlying_diseases`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
@@ -120,7 +113,7 @@ function CreatePatient() {
         }
       });
   };
-  const getAllergy = async () => {
+  const getAllergy = async() => {
     fetch(`${apiUrl}/allergys`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
@@ -131,7 +124,7 @@ function CreatePatient() {
         }
       });
   };
-  const getRecorder = async () => {
+  const getRecorder = async() => {
     fetch(`${apiUrl}/recorders`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
@@ -147,7 +140,7 @@ function CreatePatient() {
     getAllergy;
     getDisease;
     getRecorder;
-  },);
+  },[]);
 
   const convertType = (data: string | number | undefined) => {
     let val = typeof data === "string" ? parseInt(data) : data;
@@ -157,14 +150,14 @@ function CreatePatient() {
   function submit() {
     setSuccess(true); /**Tty Button SUMMIT */
     let data = {
-      ID_CARD: convertType(patient.ID_CARD),
-      FIRSTNAME: convertType(patient.FIRSTNAME),
-      LASTNAME: convertType(patient.LASTNAME),
-      AGE: convertType(patient.AGE),
+      ID_CARD: convertType(patients.ID_CARD),
+      FIRSTNAME: convertType(patients.FIRSTNAME),
+      LASTNAME: convertType(patients.LASTNAME),
+      AGE: convertType(patients.AGE),
       BIRTHDATE: selectedDate,
-      AllergyID: convertType(patient.AllergyID),
-      Underlying_diseaseID: convertType(patient.Underlying_diseaseID),
-      RecorderID: convertType(patient.RecorderID),
+      AllergyID: convertType(patients.AllergyID),
+      Underlying_diseaseID: convertType(patients.Underlying_diseaseID),
+      RecorderID: convertType(patients.RecorderID),
     };
 
     const requestOptionsPost = {
@@ -211,7 +204,7 @@ function CreatePatient() {
                 label="หมายเลขประจำตัวประชาชน"
                 fullWidth
                 type="Number"
-                value={patient.ID_CARD}
+                value={patients.ID_CARD}
               />
             </Grid>
             <Grid item xs={12} sm={4}>
@@ -239,19 +232,24 @@ function CreatePatient() {
                 fullWidth
               />
             </Grid>
-            <Grid item xs={12} sm={2} spacing={0}>
-              <FormControl className={classes.formControl} variant="outlined">
-                <InputLabel id="gender">เพศ</InputLabel>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <Grid item xs={12} sm={3}>
+              <FormControl variant="outlined" fullWidth>
+                <InputLabel>เพศ</InputLabel>
                 <Select
-                  native
-                  value={patient.GenderID}
+                  label=""
+                  value={patients.GenderID}
                   onChange={handleChange}
-                  inputProps={{ name: "VideoID" }}
-                >
-                  <option aria-label="None" value="">
-                    กรุณาเลือก
-                  </option>
-                  {gender.map((item: GenderInterface) => (
+                  inputProps={{ name: "GenderID" }}
+                ><option aria-label="None" value="">
+                กรุณาเลือก
+              </option>
+                  {genders.map((item: GenderInterface) => (
+                    
                     <option value={item.ID} key={item.ID}>
                       {item.IDENTITY}
                     </option>
@@ -272,47 +270,62 @@ function CreatePatient() {
                 />
               </MuiPickersUtilsProvider>
             </Grid>
-
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={2}>
+            <TextField
+                disabled
+                id="PATIENT_ID"
+                label="อายุ"
+                defaultValue="1001"
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={6}>
               <p>ประวัติการแพ้ยา</p>
-              <Select
+              <FormControl fullWidth variant="outlined">
+                <Select
                   native
-                  value={patient.AllergyID}
+                  value={patients.AllergyID}
                   onChange={handleChange}
                   inputProps={{ name: "AllergyID" }}
                 >
                   <option aria-label="None" value="">
                     กรุณาเลือก
                   </option>
-                  {allergy.map((item: AllergyInterface) => (
+                  {allergys.map((item: AllergyInterface) => (
                     <option value={item.ID} key={item.ID}>
                       {item.INFORMATION}
                     </option>
                   ))}
                 </Select>
+              </FormControl>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <p>โรคประจำตัว</p>
-              <Select
+              <FormControl fullWidth variant="outlined">
+                <Select
+                  fullWidth
                   native
-                  value={patient.Underlying_diseaseID}
+                  value={patients.Underlying_diseaseID}
                   onChange={handleChange}
                   inputProps={{ name: "Underlying_diseaseID" }}
                 >
                   <option aria-label="None" value="">
                     กรุณาเลือก
                   </option>
-                  {underlying_disease.map((item: Underlying_diseaseInterface) => (
-                    <option value={item.ID} key={item.ID}>
-                      {item.INFORMATION}
-                    </option>
-                  ))}
+                  {underlying_diseases.map(
+                    (item: Underlying_diseaseInterface) => (
+                      <option value={item.ID} key={item.ID}>
+                        {item.INFORMATION}
+                      </option>
+                    )
+                  )}
                 </Select>
+              </FormControl>
             </Grid>
           </Grid>
         </React.Fragment>
       </Paper>
-
+      <br />
       <Grid container justifyContent="center">
         <div>
           <Grid item xs={12}>
@@ -321,7 +334,6 @@ function CreatePatient() {
               color="primary"
               size="medium"
               onClick={submit}
-              className={classes.button}
               startIcon={<SaveIcon />}
             >
               SUBMIT
