@@ -1,7 +1,7 @@
 
 import { BrowserRouter as Router } from "react-router-dom";
 import AppBar from "./components/AppBar";
-import CreateData from "./components/Patient_reg";
+import CreatePatient from "./components/CreatePatient";
 
 
 export default function App() {
@@ -9,7 +9,7 @@ export default function App() {
     <Router>
       <div>
         <AppBar />
-        <CreateData />
+        <CreatePatient />
       </div>
     </Router>
   );
